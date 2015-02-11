@@ -10,7 +10,7 @@ RUN wget -q -O - http://mirror.vorboss.net/apache/zookeeper/zookeeper-3.4.6/zook
 
 ENV ZK_HOME /opt/zookeeper-3.4.6
 
-RUN mkdir -p /data/zookeeper
+RUN mkdir -p /data/zookeeper && mkdir -p /var/log/zookeeper
 
 EXPOSE 2181 2888 3888
 
