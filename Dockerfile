@@ -20,4 +20,4 @@ COPY *.cfg /opt/zookeeper-3.4.6/conf/
 
 COPY *.properties /opt/zookeeper-3.4.6/conf/
 
-CMD echo "Starting Zookeeper..." && ZOO_LOG_DIR=/var/log/zookeeper ZOO_LOG4J_PROP=DEBUG,ROLLINGFILE bash bin/zkServer.sh start-foreground
+CMD echo "Starting Zookeeper..." && ZOO_LOG_DIR=/var/log/zookeeper ZOO_LOG4J_PROP=DEBUG,ROLLINGFILE SERVER_JVMFLAGS="-Xms1g -Xmx1g -XX:+UseG1GC " bash bin/zkServer.sh start-foreground
