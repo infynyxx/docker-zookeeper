@@ -1,0 +1,8 @@
+zk:
+  build: .
+  environment:
+    - ZK_CLIENT_PORT=3888 # defaul ZK port
+    #- ZOO_LOG_DIR # ZK log directory
+    #- ZOO_DATA_DIR # ZK Data Directory
+    #- JVM_HEAP_MEMORY # JVM Max and Min heap memory, default to 1G
+    #- SERVER_JVMFLAGS # Additional JVM server flags besides: Xms, Xmx, XX:+UseG1GC, Xloggc

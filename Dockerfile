@@ -4,20 +4,27 @@ RUN apt-get -y update && apt-get -y upgrade
 
 RUN apt-get -y install build-essential
 
-RUN apt-get -y install wget
+RUN apt-get -y --force-yes --fix-missing install wget
 
-RUN wget -q -O - http://mirror.vorboss.net/apache/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz | tar -xzf - -C /opt
+ENV ZK_VER 3.4.6
 
-ENV ZK_HOME /opt/zookeeper-3.4.6
+RUN wget -q -O - http://mirror.vorboss.net/apache/zookeeper/zookeeper-$ZK_VER/zookeeper-$ZK_VER.tar.gz \
+    | tar -xzf - -C /opt
+
+ENV ZK_HOME /opt/zookeeper-$ZK_VER
 
 RUN mkdir -p /data/zookeeper && mkdir -p /var/log/zookeeper
 
+WORKDIR /opt/zookeeper-$ZK_VER
+
+COPY *.cfg /opt/zookeeper-$ZK_VER/conf/
+
+COPY *.properties /opt/zookeeper-$ZK_VER/conf/
+
+ADD run.sh /opt/zookeeper-$ZK_VER/run.sh
+
 EXPOSE 2181 2888 3888
 
-WORKDIR /opt/zookeeper-3.4.6
+RUN ls /opt/zookeeper-$ZK_VER/run.sh
 
-COPY *.cfg /opt/zookeeper-3.4.6/conf/
-
-COPY *.properties /opt/zookeeper-3.4.6/conf/
-
-CMD echo "Starting Zookeeper..." && ZOO_LOG_DIR=/var/log/zookeeper ZOO_LOG4J_PROP=DEBUG,ROLLINGFILE SERVER_JVMFLAGS="-Xms1g -Xmx1g -XX:+UseG1GC " bash bin/zkServer.sh start-foreground
+CMD bash /opt/zookeeper-$ZK_VER/run.sh
