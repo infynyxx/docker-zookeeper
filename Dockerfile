@@ -6,7 +6,7 @@ RUN apt-get -y install build-essential
 
 RUN apt-get -y --force-yes --fix-missing install wget
 
-ENV ZK_VER 3.4.6
+ENV ZK_VER 3.4.10
 
 RUN wget -q -O - http://mirror.vorboss.net/apache/zookeeper/zookeeper-$ZK_VER/zookeeper-$ZK_VER.tar.gz \
     | tar -xzf - -C /opt
